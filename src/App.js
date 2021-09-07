@@ -10,7 +10,7 @@ function App(props){
         polygonAngle: null,
         lineCap: true,
         textInput: '',
-        fillColor: '#0367ff',
+        fillColor: '#4c5685',
         lineWidth: 5
     });
     const [clearFlag, setclearFlag] = useState(false)

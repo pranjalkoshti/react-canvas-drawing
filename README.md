@@ -1,50 +1,128 @@
-### React Customizable Countdown
+### React Drawing Canvas
 
 
 You can install the module via npm:
 
- `npm install react-canvas-drawing --save`
+ `npm install react-drawing-canvas --save`
 
 
 ### Usage
-For using counter with standard styles - 
+
+There are two ways - Drawing on React Canvas Component and Drawing on Existing Html Canvas by passing a reference  
 
 ```
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Counter from 'react-canvas-drawing';
+import React,  { useEffect, useRef, useState } from "react";
+import { Canvas } from 'react-drawing-canvas';
  
-ReactDOM.render(
-  <Counter 
-    date="2021-01-10T14:48:00" 
-  />,
-  document.getElementById('root')
-);
-```
+const App = () =>{
+   const canvas = useRef(null);
+    const [settings, setsettings] = useState({
+        shape: 'line', // line, circle, rect
+        fillColor: '#4c5685',
+        lineWidth: 5,
+        canvasFillColor:'#fff'
+    });
+    const [clearFlag, setclearFlag] = useState(false)
+    const [canvasInstance, setcanvasInstance] = useState(false)
 
-For applying custom styles for labels, counter or timer component itself 
+    useEffect(() => {
+        let canvasObj = new Canvas({
+            canvas: canvas.current,
+            onDrawActionEnd: onDrawActionEnd,
+            onClear: onClear
+        })
+        setcanvasInstance(canvasObj)
+    }, [])
 
-```
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Counter from 'react-canvas-drawing';
- 
-ReactDOM.render(
-   <Counter 
-        date="2021-01-10T14:48:00" 
-        timerStyle={{marginTop:'10px', width:'20%'}} 
-        counterStyle={{fontSize:'15px', color:'white', border:'1px solid red', padding:'10px', margin:'5px', backgroundColor:'red'}} 
-        labelStyle={{color:'grey',fontSize:'12px', textTransform:'uppercase'}}
-    /> ,
-  document.getElementById('root')
+    const clearCanvas = ()=>{
+        canvasInstance.clearCanvas()
+    }
+
+    const onDrawActionEnd = () =>{
+        setsettings(obj=>{
+            return {...obj, shape: null}
+        })
+    }
+
+    const onClear = () =>{
+        setclearFlag(false)
+    }
+
+    useEffect(() => {
+        if(canvasInstance){
+            canvasInstance.settingsListener(settings)
+        }
+    }, [settings])
+
+  return(
+    <>
+      <select onChange={(e)=>{
+            setsettings(obj=>{
+                return {...obj, shape: e.target.value}
+            })
+          
+        }}>
+            <option>line</option>
+            <option>circle</option>
+            <option>rect</option>
+        </select>
+
+        <input id='fillColor' type='color' step='1' 
+            value={settings.fillColor} 
+            onChange={(e)=>{
+                setsettings(obj=>{
+                    return {...obj, fillColor: e.target.value}
+                })
+            }}></input>
+
+        <input type="range" min="1" max="100" value={settings.lineWidth} 
+            class="slider" 
+            id="myRange"
+          onChange={(e)=>{
+            setsettings(obj=>{
+                return {...obj, lineWidth: e.target.value}
+            })
+        }}/>
+
+        <button onClick={()=>{
+            setclearFlag(true)
+            clearCanvas()
+        }}>Clear</button>
+
+// Using React Canvas Component----
+        <ReactCanvas 
+          width={800} 
+          height={1200} 
+          canvasStyle={{border:'1px solid grey'}} 
+          settings={{
+            shape: 'line', // line, circle, rect
+            fillColor: '#4c5685',
+            lineWidth: 5,
+            canvasFillColor:'#fff'
+          }}
+          onDrawActionEnd={onDrawActionEnd}
+          clearFlag={clearFlag} //boolean
+          onClear={onClear}
+      />
+
+// Using HTML Canvas --------
+      <canvas ref={canvas} id="react-canvas" width={500} height={800} style={{border:'1px solid grey'}}/>
+      </>
+    />
+  )
+}
+export default App;
 ```
 
 ### Props
 
 | Name  | Type | Default |
 | ------------- | ------------- | ------------- | 
-| date  | String  | date 24 Hrs from now |
-| timerStyle | style Object | undefined | 
-| counterStyle | style Object | undefined | 
-| labelStyle | style Object | undefined | 
+| height  | integer  | undefined |
+| width | integer | undefined | 
+| canvasStyle | style Object | undefined | 
+| settings | Object | undefined | 
+| clearFlag | Boolean | false |
+| onClear | Function | undefined | 
+| id | string | 'react-canvas' |
 

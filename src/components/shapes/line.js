@@ -15,6 +15,7 @@ class Line {
         // context.fillStyle = this.color
         context.strokeStyle = this.color;
         context.lineWidth = this.lineWidth;
+        context.beginPath();
         if (this.active) {
             // context.fillStyle = this.activeColor;
             // context.save()

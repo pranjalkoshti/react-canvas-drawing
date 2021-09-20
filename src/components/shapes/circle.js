@@ -18,6 +18,7 @@ class Circle {
         // context.fillStyle = this.color
         context.strokeStyle = this.color;
         context.lineWidth = this.lineWidth;
+        context.beginPath();
         if (this.active) {
             // context.fillStyle = this.activeColor;
             // context.save()
@@ -35,7 +36,9 @@ class Circle {
             // drawCoords(context, this.x, this.y, this.activeColor)
             // context.restore()
         }
-        context.arc(this.x, this.y, this.radius, this.sAngle, this.eAngle)
+        context.arc(this.x, this.y, this.radius, this.sAngle, this.eAngle, false)
+        // context.arc(this.x, this.y, 75, 0, 2 * Math.PI, false)
+
         // if (this.selected) {
         //     context.lineWidth = 2;
         //     context.strokeStyle = this.activeColor2

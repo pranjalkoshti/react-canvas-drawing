@@ -3,15 +3,11 @@ import { ReactCanvas, Canvas } from './components';
 
 function App(props){
     const canvas = useRef(null);
-    const [settings, setsettings] = useState({fillBox : true,
-        shape: null, //circle, square, line, ellipse, rect, polygon
-        xor : true,
-        polygonSides: null,
-        polygonAngle: null,
-        lineCap: true,
-        textInput: '',
+    const [settings, setsettings] = useState({
+        shape: 'line', // line, circle, rect
         fillColor: '#4c5685',
-        lineWidth: 5
+        lineWidth: 5,
+        canvasFillColor:'#fff'
     });
     const [clearFlag, setclearFlag] = useState(false)
     const [canvasInstance, setcanvasInstance] = useState(false)
@@ -84,15 +80,16 @@ function App(props){
             clearCanvas()
         }}>Clear</button>
 
-        {/* <ReactCanvas 
+        <ReactCanvas 
             width={800} 
             height={1200} 
             canvasStyle={{border:'1px solid grey'}} 
             settings={{...settings}}
             onDrawActionEnd={onDrawActionEnd}
             clearFlag={clearFlag}
-            onClear={onClear1}
-        /> */}
+            onClear={onClear}
+            id={"react-canvas-1"}
+        />
     <div>
         <canvas ref={canvas} id="react-canvas" width={500} height={800} style={{border:'1px solid grey'}}/>
     </div>

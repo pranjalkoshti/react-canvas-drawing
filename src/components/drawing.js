@@ -73,9 +73,12 @@ class Drawing {
 
     updatesShapesArr=()=>{
         let arr = [...this.state.shapes]
-        arr.push(this.state.currentShape)
-        this.state.shapes = arr;
-        this.state.currentShape = null
+        if(this.state.currentShape){
+            arr.push(this.state.currentShape)
+            this.state.shapes = arr;
+            this.state.currentShape = null
+
+        }
     }
 
     eraseCanvas = () => {
@@ -104,7 +107,7 @@ class Drawing {
         // tell the browser we're handling this event
         e.preventDefault();
         e.stopPropagation();
-
+      
         let arr = shapes.map(e => this.cursorInRect(position.x, position.y, e.x, e.y, e.width, e.height))
         if(!arr.every(e => e === false)){
             canvas.style.cursor = 'pointer'
@@ -163,16 +166,16 @@ class Drawing {
         if(shape == 'rect'){
             this.drawRect1(position)
         }
+ 
     }
 
     drawLine1=(position)=>{
         const { canvas, dragStartLocation, settings } = this.state;
         let context = canvas.getContext('2d');
         this.redrawCanvas()
-        context.beginPath();
         let line = new Line(dragStartLocation, position, settings)
         line.draw(context)
-        context.closePath();
+        // context.closePath();
         this.state.currentShape = {type:'line', start:{x: dragStartLocation.x, y: dragStartLocation.y}, end: { x: position.x, y: position.y }, 
         isDragging: false, instance : line}
     }
@@ -181,8 +184,7 @@ class Drawing {
         const { canvas, dragStartLocation, settings } = this.state;
         let context = canvas.getContext('2d');
         this.redrawCanvas()
-        context.moveTo(dragStartLocation.x, dragStartLocation.y);
-        context.beginPath();
+        // context.moveTo(dragStartLocation.x, dragStartLocation.y);
         var radius = Math.sqrt(Math.pow((dragStartLocation.x - position.x), 2) + Math.pow((dragStartLocation.y - position.y), 2));
         let circle = new Circle(dragStartLocation.x, dragStartLocation.y, radius, 0, 2*Math.PI, settings)
         circle.draw(context)
@@ -195,13 +197,12 @@ class Drawing {
         const { canvas, dragStartLocation, settings, prevPosition } = this.state;
         let context = canvas.getContext('2d');
         this.redrawCanvas()
-        context.moveTo(dragStartLocation.x, dragStartLocation.y);
-        context.beginPath();
+        // context.moveTo(dragStartLocation.x, dragStartLocation.y);
         var w = position.x - dragStartLocation.x;
         var h = position.y - dragStartLocation.y;
         let square = new Square(dragStartLocation.x, dragStartLocation.y, w, h, settings)
         square.draw(context)
-        context.closePath();
+        // context.closePath();
         this.state.currentShape = {type:'square', x: dragStartLocation.x, y: dragStartLocation.y, width: w, height: h, isDragging: false, 
             instance: square }
     }

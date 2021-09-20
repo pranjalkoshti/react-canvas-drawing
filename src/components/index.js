@@ -34,7 +34,7 @@ export const ReactCanvas = (props)=>{
 
   return(
  
-      <canvas ref={canvas} id="react-canvas" width={props.width} height={props.height} style={{...props.canvasStyle}}/>
+      <canvas ref={canvas} id={props.id ? props.id : "react-canvas"} width={props.width ? props.width : 800} height={props.height ? props.height : 1200} style={{...props.canvasStyle}}/>
    
   )
 }

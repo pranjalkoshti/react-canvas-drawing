@@ -116,12 +116,16 @@ export default App;
 
 ### Props
 
-| Name  | Type | Default |
+| Name  | Type | Default | 
 | ------------- | ------------- | ------------- | 
 | height  | integer  | undefined |
 | width | integer | undefined | 
 | canvasStyle | style Object | undefined | 
-| settings | Object | undefined | 
+| settings | Object | - | 
+| settings properties - shape | enum | default - 'line', values - 'line', 'circle', 'rect' |
+| settings properties - fillColor | string | '#4c5685' |
+| settings properties - lineWidth | integer | 5 |
+| settings properties - canvasFillColor | string | '#fff' |
 | clearFlag | Boolean | false |
 | onClear | Function | undefined | 
 | id | string | 'react-canvas' |

@@ -1,50 +1,5 @@
-import Square from './shapes/square';
-import Circle from './shapes/circle';
-import Line from './shapes/line';
-
 class Drawing {
   constructor() {
-    this.cursorInRect = (mouseX, mouseY, rectX, rectY, rectW, rectH) => {
-      let xLine = mouseX > rectX && mouseX < rectX + rectW;
-      let yLine = mouseY > rectY && mouseY < rectY + rectH;
-      return xLine && yLine;
-    };
-
-    this.drawInitialCanvas = () => {
-      const {
-        canvas,
-        settings,
-        shapes
-      } = this.state;
-      let context = canvas.getContext('2d');
-
-      if (settings.canvasFillColor) {
-        context.fillStyle = settings.canvasFillColor;
-        context.fillRect(0, 0, canvas.width, canvas.height);
-      }
-    };
-
-    this.redrawCanvas = () => {
-      const {
-        canvas,
-        settings,
-        shapes
-      } = this.state;
-      let context = canvas.getContext('2d');
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      if (settings.canvasFillColor) {
-        context.fillStyle = settings.canvasFillColor;
-        context.fillRect(0, 0, canvas.width, canvas.height);
-      }
-
-      shapes.forEach(e => {
-        if (e.instance) {
-          e.instance.draw(context);
-        }
-      });
-    };
-
     this.updateSettings = settings => {
       this.state.settings = { ...this.state.settings,
         ...settings
@@ -52,6 +7,19 @@ class Drawing {
       const {
         canvas
       } = this.state;
+    };
+
+    this.getCanvasCoordinates = event => {
+      const {
+        canvas
+      } = this.state;
+      var x = event.clientX - canvas.getBoundingClientRect().left;
+      var y = event.clientY - canvas.getBoundingClientRect().top; //return object where x is x and y is y
+
+      return {
+        x: x,
+        y: y
+      };
     };
 
     this.getPosition = mouseEvent => {
@@ -69,12 +37,9 @@ class Drawing {
 
     this.updatesShapesArr = () => {
       let arr = [...this.state.shapes];
-
-      if (this.state.currentShape) {
-        arr.push(this.state.currentShape);
-        this.state.shapes = arr;
-        this.state.currentShape = null;
-      }
+      arr.push(this.state.currentShape);
+      this.state.shapes = arr;
+      this.state.currentShape = null;
     };
 
     this.eraseCanvas = () => {
@@ -83,10 +48,35 @@ class Drawing {
       } = this.state;
       let context = canvas.getContext('2d');
       context.clearRect(0, 0, canvas.width, canvas.height);
-      this.state.shapes = [];
 
       if (this.onClear) {
         this.onClear();
+      }
+    };
+
+    this.clearSelectedShape = () => {
+      const {
+        canvas
+      } = this.state;
+      let context = canvas.getContext('2d'); // context.clearRect(0, 0, WIDTH, HEIGHT);
+    };
+
+    this.redrawShapeOnMove = () => {
+      this.clear();
+      const {
+        shapes
+      } = this.state; // redraw each shape in the shapes[] array
+
+      for (var i = 0; i < shapes.length; i++) {
+        // decide if the shape is a rect or circle
+        // (it's a rect if it has a width property)
+        console.log(shapes[i]);
+
+        if (shapes[i].width) {// rect(shapes[i]);
+        } else {// circle(shapes[i]);
+          }
+
+        ;
       }
     };
 
@@ -95,35 +85,74 @@ class Drawing {
         canvas,
         shapes
       } = this.state;
-      var position = this.getPosition(e, canvas); // tell the browser we're handling this event
+      let context = canvas.getContext('2d');
+      var position = this.getPosition(e, canvas);
+      this.setDragging(position); // tell the browser we're handling this event
 
       e.preventDefault();
-      e.stopPropagation();
-      let arr = shapes.map(e => this.cursorInRect(position.x, position.y, e.x, e.y, e.width, e.height));
+      e.stopPropagation(); // test if mouse is inside any shape(s)
+      // and redraw different alpha based on hovering
+      // context.clearRect(0,0,cw,ch);
+      // console.log('in', position)
 
-      if (!arr.every(e => e === false)) {
-        canvas.style.cursor = 'pointer';
+      if (context.isPointInStroke(position.x, position.y)) {
+        // var mx=position.x;
+        // var my=position.y;
+        //     for(var i=0;i<shapes.length;i++){
+        //         var s=shapes[i];
+        //        if(s){
+        //            // decide if the shape is a rect or circle               
+        //            if(s.type == 'square'){
+        //             console.log('in1',s.x)
+        //              // test if the mouse is inside this rect
+        //              if(mx>s.x && mx<s.x+s.width && my>s.y && my<s.y+s.height){
+        //                // if yes, set that rects isDragging=true
+        //                // dragok=true;
+        //                console.log('in',s.x)
+        //                s.isDragging=true;
+        //              }
+        //            }else if(s.type == 'circle'){
+        //              var dx=s.x-mx;
+        //              var dy=s.y-my;
+        //              // test if the mouse is inside this circle
+        //              if(dx*dx+dy*dy<s.r*s.r){
+        //                // dragok=true;
+        //                s.isDragging=true;
+        //              }
+        //            }
+        //        }
+        //     }
+        // context.globalAlpha=1.00;
+        document.body.style.cursor = 'pointer';
       } else {
-        canvas.style.cursor = 'default';
-      }
+        // context.globalAlpha=0.25;
+        document.body.style.cursor = 'grab';
+      } // context.fill();
 
-      shapes.forEach(e => {
-        if (e.selected) {
-          e.x = position.x - e.offset.x;
-          e.y = position.y - e.offset.y;
+    };
+
+    this.setDragging = (x, y) => {
+      const {
+        shapes
+      } = this.state;
+
+      for (var i = 0; i < shapes.length; i++) {
+        var item = shapes[i]; // if x/y hit this item, set it’s isDragging flag
+
+        if (x >= item.x && x <= item.x + item.width && y >= item.y && y <= item.y + item.height) {
+          item.isDragging = true;
         }
-
-        this.cursorInRect(position.x, position.y, e.x, e.y, e.edge, e.edge) ? e.active != true ? e.instance.activate() : e.active = false : e.active = false;
-      });
+      }
     };
 
     this.handleMouseDown = mouseEvent => {
       const {
-        canvas,
-        settings
+        canvas
       } = this.state;
       let context = canvas.getContext('2d');
-      var position = this.getPosition(mouseEvent, canvas);
+      var position = this.getPosition(mouseEvent, canvas); // context.moveTo(position.X, position.Y);
+
+      context.beginPath();
       this.state.dragStartLocation = position; // attach event handlers
 
       canvas.addEventListener('mousemove', this.drawShape);
@@ -185,14 +214,11 @@ class Drawing {
     this.drawLine1 = position => {
       const {
         canvas,
-        dragStartLocation,
-        settings
+        dragStartLocation
       } = this.state;
       let context = canvas.getContext('2d');
-      this.redrawCanvas();
-      let line = new Line(dragStartLocation, position, settings);
-      line.draw(context); // context.closePath();
-
+      context.lineTo(position.x, position.y);
+      context.stroke();
       this.state.currentShape = {
         type: 'line',
         start: {
@@ -201,10 +227,9 @@ class Drawing {
         },
         end: {
           x: position.x,
-          y: position.y
-        },
-        isDragging: false,
-        instance: line
+          y: position.y,
+          isDragging: false
+        }
       };
     };
 
@@ -215,12 +240,10 @@ class Drawing {
         settings
       } = this.state;
       let context = canvas.getContext('2d');
-      this.redrawCanvas(); // context.moveTo(dragStartLocation.x, dragStartLocation.y);
-
       var radius = Math.sqrt(Math.pow(dragStartLocation.x - position.x, 2) + Math.pow(dragStartLocation.y - position.y, 2));
-      let circle = new Circle(dragStartLocation.x, dragStartLocation.y, radius, 0, 2 * Math.PI, settings);
-      circle.draw(context); // context.closePath();
+      context.arc(dragStartLocation.x, dragStartLocation.y, radius, 0, 2 * Math.PI); // context.fill();
 
+      context.stroke();
       this.state.currentShape = {
         type: 'circle',
         x: dragStartLocation.x,
@@ -228,8 +251,7 @@ class Drawing {
         radius: radius,
         sAngle: 0,
         eAngle: 2 * Math.PI,
-        isDragging: false,
-        instance: circle
+        isDragging: false
       };
     };
 
@@ -237,30 +259,24 @@ class Drawing {
       const {
         canvas,
         dragStartLocation,
-        settings,
-        prevPosition
+        settings
       } = this.state;
       let context = canvas.getContext('2d');
-      this.redrawCanvas(); // context.moveTo(dragStartLocation.x, dragStartLocation.y);
-
       var w = position.x - dragStartLocation.x;
       var h = position.y - dragStartLocation.y;
-      let square = new Square(dragStartLocation.x, dragStartLocation.y, w, h, settings);
-      square.draw(context); // context.closePath();
-
+      context.rect(dragStartLocation.x, dragStartLocation.y, w, h);
+      context.stroke();
       this.state.currentShape = {
         type: 'square',
         x: dragStartLocation.x,
         y: dragStartLocation.y,
         width: w,
         height: h,
-        isDragging: false,
-        instance: square
+        isDragging: false
       };
     };
 
     this.finishDrawing = mouseEvent => {
-      this.redrawCanvas();
       const {
         canvas,
         shapes
@@ -268,18 +284,21 @@ class Drawing {
       let context = canvas.getContext('2d'); // draw the line to the finishing coordinates
 
       this.drawShape(mouseEvent, canvas, context);
+      context.closePath();
       this.updatesShapesArr(); // unbind any events which could draw
 
-      canvas.removeEventListener("mousemove", this.drawShape);
-      canvas.addEventListener('mousemove', this.handleMouseMove);
+      canvas.removeEventListener("mousemove", this.drawShape); // canvas.addEventListener('mousemove', this.handleMouseMove)
+
       canvas.removeEventListener("mouseup", this.finishDrawing);
       canvas.removeEventListener("mouseout", this.finishDrawing);
     };
 
     this.addEventListeners = canvas => {
       this.state.canvas = canvas;
-      canvas.addEventListener('mousedown', this.handleMouseDown);
-      this.drawInitialCanvas();
+      canvas.addEventListener('mousedown', this.handleMouseDown); // canvas.addEventListener('mousedown', this.dragStart, false);
+      // canvas.addEventListener('mousemove', this.drag, false);
+      // canvas.addEventListener('mouseup', this.dragStop, false);
+      // canvas.addEventListener('mouseover', this.mouseHoverHandler, false);
     };
 
     this.state = {
@@ -292,17 +311,16 @@ class Drawing {
       is_touch_device: 'ontouchstart' in document.documentElement,
       settings: {
         fillBox: false,
-        shape: 'line',
+        shape: null,
         //circle, square, line, ellipse, rect, polygon
         xor: false,
         polygonSides: null,
         polygonAngle: null,
         lineCap: 'round',
         textInput: '',
-        fillColor: '#4c5685',
+        fillColor: '#0367ff',
         lineWidth: 5,
-        lineJoin: 'round',
-        canvasFillColor: null
+        lineJoin: 'round'
       }
     };
   }

@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Drawing from './drawing';
-
-const Canvas = props => {
-  // const canvas = useRef(null);
+export const ReactCanvas = props => {
+  const canvas = useRef(null);
   const [DrawingController, setDrawingController] = useState(new Drawing());
   useEffect(() => {
     DrawingController.updateSettings(props.settings);
@@ -24,13 +23,40 @@ const Canvas = props => {
     DrawingController.onClear = props.onClear;
   }
 
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("canvas", {
-    id: "react-canvas",
-    width: props.width,
-    height: props.height,
+  return /*#__PURE__*/React.createElement("canvas", {
+    ref: canvas,
+    id: props.id ? props.id : "react-canvas",
+    width: props.width ? props.width : 800,
+    height: props.height ? props.height : 1200,
     style: { ...props.canvasStyle
     }
-  }));
+  });
 };
+export class Canvas {
+  constructor(data) {
+    this.updateCanvas = canvas => {
+      this.DrawingController.addEventListeners(canvas);
+    };
 
-export default Canvas;
+    this.clearCanvas = () => {
+      this.DrawingController.eraseCanvas();
+    };
+
+    this.settingsListener = settings => {
+      this.DrawingController.updateSettings(settings);
+    };
+
+    this.DrawingController = new Drawing();
+
+    if (this.DrawingController && data.onDrawActionEnd) {
+      this.DrawingController.onDrawActionEnd = data.onDrawActionEnd;
+    }
+
+    if (this.DrawingController && data.onClear) {
+      this.DrawingController.onClear = data.onClear;
+    }
+
+    this.DrawingController.addEventListeners(data.canvas);
+  }
+
+}

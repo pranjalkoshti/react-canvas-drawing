@@ -7,7 +7,7 @@ function App(props){
         shape: 'line', // line, circle, rect
         fillColor: '#4c5685',
         lineWidth: 5,
-        canvasFillColor:'#fff'
+        canvasFillColor:'green'
     });
     const [clearFlag, setclearFlag] = useState(false)
     const [canvasInstance, setcanvasInstance] = useState(false)

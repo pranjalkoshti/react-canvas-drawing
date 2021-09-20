@@ -3,7 +3,7 @@
 
 You can install the module via npm:
 
- `npm install react-drawing-canvas --save`
+ `npm install react-canvas-drawing --save`
 
 
 ### Usage
@@ -14,7 +14,7 @@ There are two ways of using this package
 
 ```
 import React,  { useEffect, useRef, useState } from "react";
-import { ReactCanvas, Canvas } from 'react-drawing-canvas';
+import { ReactCanvas, Canvas } from 'react-canvas-drawing';
  
 const App = () =>{
    const canvas = useRef(null);

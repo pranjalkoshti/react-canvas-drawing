@@ -24,7 +24,7 @@ class Drawing {
                 fillColor: '#4c5685',
                 lineWidth: 5,
                 lineJoin: 'round',
-                canvasFillColor:'#fff'
+                canvasFillColor: null
             }
         }
     }
@@ -36,6 +36,16 @@ class Drawing {
         return xLine && yLine
     }
     
+    drawInitialCanvas=()=>{
+        const { canvas, settings, shapes } = this.state;
+     
+        let context = canvas.getContext('2d');
+
+        if(settings.canvasFillColor){
+            context.fillStyle = settings.canvasFillColor
+            context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+    }
 
     redrawCanvas=()=>{
         const { canvas, settings, shapes } = this.state;
@@ -45,7 +55,9 @@ class Drawing {
 
         if(settings.canvasFillColor){
             context.fillStyle = settings.canvasFillColor
+            context.fillRect(0, 0, canvas.width, canvas.height);
         }
+
         shapes.forEach(e => {
             if(e.instance){
                 e.instance.draw(context)
@@ -225,6 +237,7 @@ class Drawing {
     addEventListeners = (canvas) => {
         this.state.canvas = canvas;
         canvas.addEventListener('mousedown', this.handleMouseDown)
+        this.drawInitialCanvas()
     }
 }
 

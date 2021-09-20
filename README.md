@@ -8,11 +8,13 @@ You can install the module via npm:
 
 ### Usage
 
-There are two ways - Drawing on React Canvas Component and Drawing on Existing Html Canvas by passing a reference  
+There are two ways of using this package 
+- Drawing on React Canvas Component 
+- Drawing on Existing Html Canvas by passing a reference  
 
 ```
 import React,  { useEffect, useRef, useState } from "react";
-import { Canvas } from 'react-drawing-canvas';
+import { ReactCanvas, Canvas } from 'react-drawing-canvas';
  
 const App = () =>{
    const canvas = useRef(null);

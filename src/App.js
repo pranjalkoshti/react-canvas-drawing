@@ -1,98 +1,23 @@
 import React,  { useEffect, useRef, useState } from "react";
-import { ReactCanvas, Canvas } from './components';
+import { StaticHeader, GoogleTranslator } from './components';
 
 function App(props){
-    const canvas = useRef(null);
-    const [settings, setsettings] = useState({
-        shape: 'line', // line, circle, rect
-        fillColor: '#4c5685',
-        lineWidth: 5,
-        canvasFillColor:'green'
-    });
-    const [clearFlag, setclearFlag] = useState(false)
-    const [canvasInstance, setcanvasInstance] = useState(false)
-
-
-    useEffect(() => {
-        let canvasObj = new Canvas({
-            canvas: canvas.current,
-            onDrawActionEnd: onDrawActionEnd,
-            onClear: onClear
-        })
-        setcanvasInstance(canvasObj)
-    }, [])
-
-
-    const clearCanvas = ()=>{
-        canvasInstance.clearCanvas()
+  
+    const page = {
+        pageFor: "WEB",
+        pageName: "footer web",
+        siteId: "02a891c1-2112-4fdc-97f8-012c80943739",
+        value: "<!DOCTYPE html>\n<html lang=\"en\"  class=\"full-height\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n  <meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\">\n \n<script type=\"text/javascript\">\n  \n  </script>\n\n<style>\n\n.textf{\ncolor:white !important;\nfont-family:'Poppins';\nfont-size:14px;\n\n}\n.litext{\ncolor:white !important;\nfont-family:'Poppins';\n}\n\n\n\n\ninput[type=\"text\"]::placeholder{\n    color:white !important;\n}\n/* input[type=text]:focus:not([readonly]) + label {\n            color: green !important; \n        }\n\n        input[type=text]:focus:not([readonly]) {\n            border-bottom: 1px 1px 1px 1px solid green !important;\n            box-shadow: 1px 1px 1px 1px green !important; \n        } */\n\n        .md-form .input-prefix.active {\n    color: white !important;\n}\n\ninput[type=text]:focus{\n  border: 2px solid white !important;     /* oranges! yey */\n  outline: none;\n}\n.speedyf{\nfont-weight: 400;\nfont-family: \"Poppins\";\nfont-size: 11pt;\ncolor:black;\n\n}\n\n.litext{\ncolor:white !important;\n}\n.line {\nheight:90px;\nbackground-color:#867777;\nwidth:1px;\n-moz-transform: skewX(0deg) skewY(-40deg);\n-webkit-transform: skewX(0deg) skewY(-40deg);\n-o-transform: skewX(0deg) skewY(-40deg);\n-ms-transform: skewX(0deg) skewY(-40deg);\ntransform: skewX(0deg) skewY(-40deg);\nmargin-top:-10px;\n}\n\n.textunderline{\n    border-bottom: 2px solid #679f42;\n    }\n.footertext{\n    font-size: 14px;\n    font-weight: 400;\ncolor:white !important;\nfont-family: \"Poppins\";\n}\n.headingfooter{\n    color:white !important;\n    font-family: \"josefin sans\";\n}\n.Sociali{\n    font-family: \"Poppins\";\n    font-size: 14px;\n    font-weight: 400;\n}\n.colorfontf{\n    font-family: \"Poppins\";\n    font-size: 11px;\n    font-weight: 400;\n}\n  \n  </style>\n</head>\n\n<body>\n    \n <!-- Footer -->\n\n\n<div style=\"margin-top:1vw\">\n        <div class=\"row justify-content-center\" style=\"background-color: #F3F3F3;display:flex;width:100%;margin:auto;height:120px;\">\n        <div class=\"col-md-3 col-lg-3 col-sm-12 \">\n         <div style=\"display:flex;margin-left: 2vw; \">\n             <img src=\"https://btoc-ecom-prod.s3.amazonaws.com/5f99e970-ce82-4078-a8fa-6335854bc3bb/HTMLPage/bottom speedy home delivry.svg\" style=\"height: 58px;margin-top: 30px\" class=\"mr-2\">\n        \n                <div class=\"speedyf\" style=\"margin-top: 40px\"> SPEEDY HOME DELIVERY</div>\n                \n            </div>\n           \n          \n        </div>\n        \n     \n        <div class=\"col-md-3 col-lg-3 col-sm-12 \">\n         <div style=\"display:flex \">\n            <div class=\"line \" style=\"margin-top: 30px;margin-right: 2vw;\"></div>\n             <img src=\"https://btoc-ecom-prod.s3.amazonaws.com/5f99e970-ce82-4078-a8fa-6335854bc3bb/HTMLPage/bottom iso certified.svg\" style=\"height: 58px;margin-top: 30px\" class=\"mr-2\"> \n           <div class=\"speedyf\" style=\"margin-top: 40px\"> ISO CERTIFIED </div>\n         \n            </div> <!--flex-->\n           \n            \n        </div> <!--col-->\n      \n        <div class=\"col-md-3 col-lg-3 col-sm-12\">\n         <div style=\"display:flex \">\n            <div class=\"line\" style=\"margin-top: 0px;margin-right: 2vw;\"></div>\n             <img src=\"https://btoc-ecom-prod.s3.amazonaws.com/5f99e970-ce82-4078-a8fa-6335854bc3bb/HTMLPage/bottom dedicated customer service.svg\" style=\"height: 58px;margin-top: 30px\" class=\"mr-2\"> \n           <div class=\"speedyf\" style=\"margin-top: 40px\"> DEDICATED CUSTOMER SERVICE</div>\n         \n            </div> <!--flex-->\n           \n          \n        </div> <!--col-->\n       \n        <div class=\"col-md-3 col-lg-3 col-sm-12\">\n         <div style=\"display:flex; \">\n            <div class=\"line\" style=\"margin-top: 30px;margin-right: 2vw;\"></div>\n             <img src=\"https://btoc-ecom-prod.s3.amazonaws.com/5f99e970-ce82-4078-a8fa-6335854bc3bb/HTMLPage/bottom quality and trust.svg\" style=\"height: 58px;margin-top: 30px\" class=\"mr-2\"> \n           <div class=\"speedyf\" style=\"margin-top: 40px\"> QUALITY AND TRUST  </div>\n       \n            </div> <!--flex-->\n           \n          \n        </div> <!--col-->\n        <!-- <div class=\"line\" style=\"margin-top: 2px;;margin-left: 20px;\"></div> -->\n     \n     </div>\n\n\n\n     <footer class=\"page-footer font-small unique-color-dark\" style=\"background-color: #9a0404 !important;\">\n\n\n        <div class=\" text-md-left\">\n           \n          <!-- Grid row -->\n         \n\n          <div class=\"row p-3\" style=\"width: 90%;margin: auto;\">\n             <!-- Grid column -->\n             <div class=\"col-md-3 col-lg-3 col-xl-3  mt-2 mb-4 \">\n      \n                <h6 class=\"text-uppercase font-weight-bold headingfooter\" >Categories</h6>\n                <div style=\"margin: 20px;\">\n                  <a href=\"/c/printed-t-shirt~men\">  <p class=\"footertext\" style=\"margin-left:-20px;\">Printed T-Shirts</p></a>\n                  <a href=\"/c/custom-designed-t-shirts\">   <p class=\"footertext\" style=\"margin-left:-20px;\">Custom Designed T-Shirts</p></a>\n                  \n                </div>\n                \n            </div>\n            <!-- Grid column -->\n           \n            <!-- Grid column -->\n            <div class=\"col-md-3 col-lg-3 col-xl-3  mt-2 mb-4 \">\n      \n                <h6 class=\"text-uppercase font-weight-bold headingfooter\" >About Us</h6>\n                <p class=\"footertext\" style=\"margin-top: 20px;margin-right: 8vw;\">VBFashion brings the best in fashion for the young and vibrant generation. Stay in touch with the times</p>\n            </div>\n            <!-- Grid column -->\n      \n            <!-- Grid column -->\n            <div class=\"col-md-3 col-lg-3 col-xl-3 mx-auto mt-2 mb-4 \">\n      \n              <!-- Links -->\n              <h6 class=\"text-uppercase font-weight-bold headingfooter\" >Information</h6>\n             \n              <p class=\"\">\n                <ul class=\"list-unstyled footertext\" style=\"color: white !important;border-radius: 10px;line-height: 35px;margin-left: 1vw;\">\n                    <div class=\"row justify-content-between\" style=\"width:80%\">\n                        <div class=\"col-12\" >\n                    <li class=\"litext\">\n                      <a href=\"/s/about us\" class=\"textf \">About Us</a>\n                    </li>\n                    <li  class=\"litext\">\n                        <a href=\"/s/privacy policy\" class=\"textf \">Privacy Policy</a>\n                      </li>\n                      <li  class=\"litext\">\n                        <a href=\"/s/Terms of Use\" class=\"textf\">Terms of Use</a>\n                      </li>\n                      <li  class=\"litext\">\n                        <a href=\"/s/Refund Policy\" class=\"textf\">Refund Policy</a>\n                      </li>\n                        </div>\n\n                   \n                </div>\n        \n                  </ul>\n              </p>\n      \n            </div>\n            <!-- Grid column -->\n      \n            <!-- Grid column -->\n            <div class=\"col-md-3 col-lg-3 col-xl-3 mt-2 mb-4\">\n      \n              <!-- Links -->\n              <h6 class=\"  text-uppercase font-weight-bold headingfooter\" style=\"margin-bottom: 20px;\" >Contact Us</h6>\n              <div style=\"display: inline;\" class=\"textf\">\n              \n                <i class=\"fas fa-map-marker-alt\" style=\"float:left;margin-top: 5px;color:white !important\"></i>\n                <p class=\"footertext\" style=\"margin-left: 15px;line-height: 23px;\">\nVB Fashion C/O Lala Bhai Chemicals,\nChuri Wadi,Off Aarey Road,Goregaon\nEast Mumbai Maharashtra <br>Pin code \n400063\n</p>\n                <div style=\"display: inline;\" class=\"textf\">\n                    <!-- <p class=\"colorfont\" style=\"color:#FB0148\">T.</p> -->\n                    <!-- <i class=\"fab fa-mdb\"></i> -->\n                    <i class=\"fas fa-mobile-alt\" style=\"float:left;margin-top: 10px;color:white !important\"></i>\n                \n                   <p class=\"footertext\" style=\"margin-left: 15px;margin-top:20px;\"> <a class=\"footertext\" href=\"tel:+91 9664669903\" style=\"color:white !important\">+91 9664669903</a></p>\n                   </div>\n                   <div style=\"display: inline;\" class=\"textf\">\n                   <i class=\"far fa-envelope\" style=\"float:left;margin-top: 5px;color:white !important\"></i>\n                   <p class=\"footertext\" style=\"margin-left: 15px;line-height: 23px;\">&nbsp; <a class=\"footertext\" href=\"mailto:greenspace.ecom@gmail.com\" style=\"color:white !important;\">greenspace.ecom@gmail.com</a></p>\n     <!-- <p class=\"colorfont\" style=\"margin-left: 15px;line-height: 0px;\">Kalaburagi–585101 -->\n         </div>\n    \n    </p>\n     <!--  <p  class=\"colorfont\" style=\"margin-left: 15px;line-height: 22px;\">Ph no:&nbsp;08472-261529</p> -->\n               </div>   \n           \n            </div>\n            <!-- Grid column -->\n      \n           \n      \n          </div>\n          <!-- Grid row -->\n          <footer class=\"page-footer font-small\" style=\"margin-top:-15px;background-color:  #800000;\">\n\n            <!-- Footer Elements -->\n            <div style=\"margin-left: 60px;margin-right: 60px;\">\n          \n            \n              <div class=\"row justify-content-between\" style=\"width:100%;margin:auto\">\n          \n<!--                 \n                <div class=\"col-md-4 col-lg-4 col-sm-12\">\n                  <div class=\"mb-5 flex-center\">\n          \n               \n                    <a class=\"ins-ic\" href=\"\" target=\"_blank\" style=\"display:flex;\">\n                        <i class=\"fab fa-instagram fa-lg white-text mr-3 fa-2x\"> </i>\n                     \n                      \n                      <p class=\"Sociali\" style=\"color:white !important\">\n                        INSTAGRAM\n                      </p>\n                    </a>\n                </div>\n                </div>\n        \n             \n        \n                  <div class=\"col-md-4 col-lg-4 col-sm-12 \">\n                    <div class=\"mb-5 flex-center\">\n                          <a class=\"pin-ic\" style=\"display:flex;\" href=\"\" target=\"_blank\">\n                        <i class=\"fab fa-twitter fa-lg white-text mr-3 fa-2x\"> </i>\n                     \n                        <p class=\"Sociali\" style=\"color:white !important\">\n                          TWITTER\n                        </p>\n                      </a>\n                  </div>\n                  </div> -->\n                  <div class=\"col-md-12 col-lg-12 col-sm-12\">\n                    <div class=\"mb-5 flex-center\">\n                        <a class=\"pin-ic\" style=\"display:flex;\" href=\"https://www.facebook.com/vbfashion.in/\" target=\"_blank\">\n                            <i class=\"fab fa-facebook-f fa-lg white-text  mr-3 fa-2x\"> </i>\n                            <p class=\"Sociali\" style=\"color:white !important\">\n                              FACEBOOK\n                            </p>\n                          </a>\n                  </div>\n                  </div>\n                \n                \n                  \n        </div>\n              <!-- Grid row-->\n          \n            </div>\n            <!-- Footer Elements -->\n          \n            <div style=\"margin-top: 30px;line-height: 10px;\">\n                <div class=\"row justify-content-center\" style=\"width:100% ;margin:auto;\">\n            \n                   <p class=\"colorfontf\" style=\"font-size: 14px;color:white !important;\">© 2021 Green Space</p>\n                 \n                </div>\n                <div class=\"row justify-content-center\" style=\"width:90% ;margin:auto;line-height: 17px;\">\n            \n                    \n                    <p style=\"font-size: 14px;color:white !important;line-height: 17px;\"><a href=\"https://www.recaho.com/\" style=\"color:white !important;\" class=\"colorfontf\">Designed and Developed by Recaho Digital Private Limited</a></p>\n                 </div>\n                </div>\n          \n          </footer>\n\n        \n        </div>\n        </div>\n     \n      \n      </footer>\n\n</body>\n</html>\n"
     }
-
-    const onDrawActionEnd = () =>{
-        setsettings(obj=>{
-            return {...obj, shape: null}
-        })
-    }
-
-    const onClear = () =>{
-        setclearFlag(false)
-    }
-
-    useEffect(() => {
-        if(canvasInstance){
-            canvasInstance.settingsListener(settings)
-        }
-    }, [settings])
-
     return (
         <>
-        <select onChange={(e)=>{
-            setsettings(obj=>{
-                return {...obj, shape: e.target.value}
-            })
-          
-        }}>
-            <option>line</option>
-            {/* <option>square</option> */}
-            <option>circle</option>
-            <option>rect</option>
-
-        </select>
-
-        <input id='fillColor' type='color' step='1' 
-            value={settings.fillColor} 
-            onChange={(e)=>{
-                setsettings(obj=>{
-                    return {...obj, fillColor: e.target.value}
-                })
-            }}></input>
-
-        <input type="range" min="1" max="100" value={settings.lineWidth} 
-            class="slider" 
-            id="myRange"
-          onChange={(e)=>{
-            setsettings(obj=>{
-                return {...obj, lineWidth: e.target.value}
-            })
-        }}/>
-
-        <button onClick={()=>{
-            setclearFlag(true)
-            clearCanvas()
-        }}>Clear</button>
-
-        <ReactCanvas 
-            width={800} 
-            height={1200} 
-            canvasStyle={{border:'1px solid grey'}} 
-            settings={{...settings}}
-            onDrawActionEnd={onDrawActionEnd}
-            clearFlag={clearFlag}
-            onClear={onClear}
-            id={"react-canvas-1"}
+        <GoogleTranslator/>
+        <StaticHeader
+             staticPage={page}
+             platform={'desktop'} // desktop | mobile
+             pageStyle={{height:'100%'}}
+             className={'special-footer'}
         />
-    <div>
-        <canvas ref={canvas} id="react-canvas" width={500} height={800} style={{border:'1px solid grey'}}/>
-    </div>
         </>
     )
 }

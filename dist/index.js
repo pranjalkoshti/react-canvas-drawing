@@ -1,62 +1,47 @@
-import React, { useState, useRef, useEffect } from "react";
-import Drawing from './drawing';
-export const ReactCanvas = props => {
-  const canvas = useRef(null);
-  const [DrawingController, setDrawingController] = useState(new Drawing());
-  useEffect(() => {
-    DrawingController.updateSettings(props.settings);
-  }, [props.settings]);
-  useEffect(() => {
-    if (props.clearFlag == true) {
-      DrawingController.eraseCanvas();
-    }
-  }, [props.clearFlag]);
-  useEffect(() => {
-    DrawingController.addEventListeners(canvas.current);
-  }, []);
+"use strict";
 
-  if (DrawingController && props.onDrawActionEnd) {
-    DrawingController.onDrawActionEnd = props.onDrawActionEnd;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "GoogleTagManager", {
+  enumerable: true,
+  get: function get() {
+    return _googleTagManager.default;
   }
-
-  if (DrawingController && props.onClear) {
-    DrawingController.onClear = props.onClear;
+});
+Object.defineProperty(exports, "GoogleTranslator", {
+  enumerable: true,
+  get: function get() {
+    return _googleTranslator.default;
   }
-
-  return /*#__PURE__*/React.createElement("canvas", {
-    ref: canvas,
-    id: props.id ? props.id : "react-canvas",
-    width: props.width ? props.width : 800,
-    height: props.height ? props.height : 1200,
-    style: { ...props.canvasStyle
-    }
-  });
-};
-export class Canvas {
-  constructor(data) {
-    this.updateCanvas = canvas => {
-      this.DrawingController.addEventListeners(canvas);
-    };
-
-    this.clearCanvas = () => {
-      this.DrawingController.eraseCanvas();
-    };
-
-    this.settingsListener = settings => {
-      this.DrawingController.updateSettings(settings);
-    };
-
-    this.DrawingController = new Drawing();
-
-    if (this.DrawingController && data.onDrawActionEnd) {
-      this.DrawingController.onDrawActionEnd = data.onDrawActionEnd;
-    }
-
-    if (this.DrawingController && data.onClear) {
-      this.DrawingController.onClear = data.onClear;
-    }
-
-    this.DrawingController.addEventListeners(data.canvas);
+});
+Object.defineProperty(exports, "HumDashManager", {
+  enumerable: true,
+  get: function get() {
+    return _humDashManager.default;
   }
+});
+Object.defineProperty(exports, "StaticFooter", {
+  enumerable: true,
+  get: function get() {
+    return _staticFooter.default;
+  }
+});
+Object.defineProperty(exports, "StaticHeader", {
+  enumerable: true,
+  get: function get() {
+    return _staticHeader.default;
+  }
+});
 
-}
+var _staticHeader = _interopRequireDefault(require("./header/staticHeader"));
+
+var _staticFooter = _interopRequireDefault(require("./footer/staticFooter"));
+
+var _googleTranslator = _interopRequireDefault(require("./common/googleTranslator"));
+
+var _googleTagManager = _interopRequireDefault(require("./socialModules/googleTagManager"));
+
+var _humDashManager = _interopRequireDefault(require("./socialModules/humDashManager"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
